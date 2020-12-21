@@ -30,7 +30,7 @@ pipeline {
             
             stage ('Deploy') {
                  steps{
-                 deploy adapters: [tomcat9(path: '', url: 'http://52.66.161.110:8080/')], contextPath: 'TomcatMavenApp', onFailure: false, war: '**/*.war'
+                 deploy adapters: [tomcat9(credentialsId: 'c8b47a09-cf7d-44d2-bb1b-4b252a602d3e',path: '', url: 'http://52.66.161.110:8080/')], contextPath: 'TomcatMavenApp', onFailure: false, war: '**/*.war'
                  echo "Deploy successful";
             }
         }
