@@ -9,35 +9,34 @@ pipeline {
             }
             stage ('Compile') {  
                   steps{
-                    bat label: '', script: 'mvn compile'
+                    sh 'mvn compile'
                     echo "test successful";
                     
                 } 
             }
             stage ('Build') {  
                   steps{
-                    bat label: '', script: 'mvn clean'
-                    bat label: '', script: 'mvn package'
+                    sh 'mvn -B clean package'
                     echo "build successful";
                     
                 } 
             }
              stage ('Test') {  
                   steps{
-                    bat label: '', script: 'mvn test'
+                    sh 'mvn test'
                     echo "test successful";
                 } 
             }
             
-        stage ('Deploy') {
-            steps{
-            deploy adapters: [tomcat9(path: '', url: 'http://52.66.161.110:8080/')], contextPath: 'TomcatMavenApp', onFailure: false, war: '**/*.war'
-             echo "Deploy successful";
+            stage ('Deploy') {
+                 steps{
+                 deploy adapters: [tomcat9(path: '', url: 'http://52.66.161.110:8080/')], contextPath: 'TomcatMavenApp', onFailure: false, war: '**/*.war'
+                 echo "Deploy successful";
             }
         }
-        stage ('Monitor') { 
-           steps{ 
-             echo "Now you can monitor!";
+            stage ('Monitor') { 
+                 steps{ 
+                 echo "Now you can monitor!";
            }
         }
     }
